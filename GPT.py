@@ -1,6 +1,7 @@
 import os
 import openai
 from datetime import datetime
+import github
 from github import Github
 import sys
 
@@ -10,11 +11,9 @@ now = datetime.now()
 dt_string = now.strftime("%A %d %B %Y %H:%M")
 
 
-openai.api_key = ""
-g = GitHub()
+openai.api_key = "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"
+g = Github("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")
 
-# Create a new Gist
-gist = g.get_user().create_gist(public=True, files={})
 
 file_name = "chatgpt_log.txt"
 # # Set the model and prompt
@@ -38,15 +37,21 @@ completion = openai.Completion.create(
 # # Print the response
 response = completion.choices[0].text
 
-print("Gibberts Response is being saved to the my_chats.txt file, and it's right here---> ", response)
-
+print("Response: ", response)
+print("GitHub Gist: https://gist.github.com/da2c2f354931c9cc303871e8771549a8")
+desc = "New Entry: " + dt_string
 
 with open(file_name, 'a') as f:
     f.write(dt_string)
-    f.write('\n\nMY QUESTION: {}\n\n'.format(prompt))
-    f.write('GIBBERTS RESPONSE: {}\n\n\n'.format(response))
+    f.write('\nQ: {}\n'.format(prompt))
+    f.write('A: {}\n\n'.format(response))
 
 # Upload the file to the Gist
 with open(file_name, 'r') as r:
-    content = f.read()
-    gist.edit(files={file_name: github.InputFileContent(content)})
+    content = r.read()
+    gist = g.get_gist("da2c2f354931c9cc303871e8771549a8")
+
+    gist.edit(
+        description=desc,
+        files={file_name: github.InputFileContent(content)},
+    )
