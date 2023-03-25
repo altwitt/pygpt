@@ -10,8 +10,8 @@ now = datetime.now()
 dt_string = now.strftime("%A %d %B %Y %H:%M")
 
 
-openai.api_key = "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"
-g = Github("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")\
+openai.api_key = ""
+g = GitHub()
 
 # Create a new Gist
 gist = g.get_user().create_gist(public=True, files={})
