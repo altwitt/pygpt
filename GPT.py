@@ -11,8 +11,8 @@ now = datetime.now()
 dt_string = now.strftime("%A %d %B %Y %H:%M")
 
 
-openai.api_key = "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"
-g = Github("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")
+openai.api_key = ""
+g = Github("")
 
 
 file_name = "chatgpt_log.txt"
